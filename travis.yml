@@ -5,7 +5,7 @@ before_install:
   - docker build -t hugolesta/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run hugolesta/react-test npm test -- --coverage
+  - docker run hugolesta/react-test npm run test -- --coverage
 
 after_success:
   - docker build -t hugolesta/multi-client ./client
