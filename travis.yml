@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t hugolesta/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run hugolesta/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t hugolesta/multi-client ./client
+  - docker build -t hugolesta/multi-nginx ./nginx
+  - docker build -t hugolesta/multi-server ./server
+  - docker build -t hugolesta/multi-worker ./worker
+  #Login into docker cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #take those images and push them to docker hub
+  - docker push hugolesta/multi-client 
+  - docker push hugolesta/multi-nginx
+  - docker push hugolesta/multi-server
+  - docker push hugolesta/multi-worker
+
