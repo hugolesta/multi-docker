@@ -2,21 +2,21 @@ sudo: required
 services:
   - docker
 before_install:
-  - docker build -t hugolesta/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t laxtour/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run hugolesta/react-test npm run test -- --coverage
+  - docker run laxtour/react-test npm run test -- --coverage
 
 after_success:
-  - docker build -t hugolesta/multi-client ./client
-  - docker build -t hugolesta/multi-nginx ./nginx
-  - docker build -t hugolesta/multi-server ./server
-  - docker build -t hugolesta/multi-worker ./worker
+  - docker build -t laxtour/multi-client ./client
+  - docker build -t laxtour/multi-nginx ./nginx
+  - docker build -t laxtour/multi-server ./server
+  - docker build -t laxtour/multi-worker ./worker
   #Login into docker cli
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #take those images and push them to docker hub
-  - docker push hugolesta/multi-client 
-  - docker push hugolesta/multi-nginx
-  - docker push hugolesta/multi-server
-  - docker push hugolesta/multi-worker
+  - docker push laxtour/multi-client 
+  - docker push laxtour/multi-nginx
+  - docker push laxtour/multi-server
+  - docker push laxtour/multi-worker
 
