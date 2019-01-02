@@ -20,3 +20,14 @@ after_success:
   - docker push laxtour/multi-server
   - docker push laxtour/multi-worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-1-417481896964
+  bucket_path: docket-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY 
